@@ -6,6 +6,8 @@ Framework - MyBatis, Spring 4<br/>
 Build Tool - Maven<br/>
 Traditional Korean style Spring Framework board
 
+modify
+\src\main\webapp\WEB-INF\applicationContext.xml
 <h1>mysql query</h1>
  
     CREATE TABLE TBL_BOARD (
@@ -54,8 +56,5 @@ Traditional Korean style Spring Framework board
 	  PRIMARY KEY (BGNO)
 	);
 
-
-modify
-\src\main\webapp\WEB-INF\applicationContext.xml
 
 
