@@ -6,21 +6,31 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>board</title>
-<script src="js/jquery-2.2.3.min.js"></script>
+
+<link rel="stylesheet" href="/webjars/bootstrap/4.1.0/dist/css/bootstrap.min.css">
+<script src="/webjars/jquery/3.3.1/dist/jquery.min.js"></script>
+<script src="/webjars/bootstrap/4.1.0/dist/js/bootstrap.min.js"></script>
+<style>
+#write {
+      text-align: right;
+}
+
+</style>
+
 <script>
 function fn_formSubmit(){
 	if ( $.trim($("#brdwriter").val()) == "") {
-		alert("작성자를 입력해주세요.");
+		alert("Please input the name");
 		$("#brdwriter").focus();
 		return;
 	}
 	if ($.trim($("#brdtitle").val()) == "") {
-		alert("글 제목을 입력해주세요.");
+		alert("Please input the title");
 		$("#brdtitle").focus();
 		return;
 	}
 	if ($.trim($("#brdmemo").val()) == "") {
-		alert("글 내용을 입력해주세요.");
+		alert("Please input the content");
 		$("#brdmemo").focus();
 		return;
 	}
@@ -29,42 +39,37 @@ function fn_formSubmit(){
 </script>
 </head>
 <body>
-	<form id="form1" name="form1" action="boardSave" method="post" enctype="multipart/form-data">
-		<table border="1" style="width:600px">
-			<caption>게시판</caption>
-			<colgroup>
-				<col width='15%' />
-				<col width='*%' />
-			</colgroup>
-			<tbody>
-				<tr>
-					<td>작성자</td> 
-					<td><input type="text" id="brdwriter" name="brdwriter" size="20" maxlength="20" value="<c:out value="${boardInfo.brdwriter}"/>"></td> 
-				</tr>
-				<tr>
-					<td>제목</td> 
-					<td><input type="text" id="brdtitle" name="brdtitle" size="70" maxlength="250" value="<c:out value="${boardInfo.brdtitle}"/>"></td> 
-				</tr>
-				<tr>
-					<td>내용</td> 
-					<td><textarea id="brdmemo" name="brdmemo" rows="5" cols="60"><c:out value="${boardInfo.brdmemo}"/></textarea></td> 
-				</tr>
-				<tr>
-					<td>첨부</td> 
-					<td>
-						<c:forEach var="listview" items="${listview}" varStatus="status">
-							<input type="checkbox" name="fileno" value="<c:out value="${listview.fileno}"/>">	
-            				<a href="fileDownload?filename=<c:out value="${listview.filename}"/>&downname=<c:out value="${listview.realname }"/>"> 							 
-							<c:out value="${listview.filename}"/></a> <c:out value="${listview.size2String()}"/><br/>
-						</c:forEach>					
-					
-						<input type="file" name="uploadfile" multiple="" />
-					</td> 
-				</tr>
-			</tbody>
-		</table>     
-		<input type="hidden" name="brdno" value="<c:out value="${boardInfo.brdno}"/>"> 
-		<a href="#" onclick="fn_formSubmit()">저장</a>
+	<div class="container">
+	<h2>Simple Board Insert Form</h2>
+	<form role="form" id="form1" name="form1" action="boardSave" method="post" enctype="multipart/form-data">
+		<div class="form-group"> 
+		<label for="brdwriter">Name</label> 
+		<input type="text" class="form-control" placeholder="Enter Name" id="brdwriter" name="brdwriter" size="20" maxlength="20" value="<c:out value="${boardInfo.brdwriter}"/>">
+		</div> 
+		
+		<div class="form-group"> 
+		<label for="brdtitle">Title</label> 
+		<input type="text" class="form-control" placeholder="Enter Title" id="brdtitle" name="brdtitle" size="70" maxlength="250" value="<c:out value="${boardInfo.brdtitle}"/>">
+		
+		</div> 
+		
+		<div class="form-group"> 
+		<label for="brdmemo">Content</label> 
+		<textarea class="form-control" id="brdmemo" name="brdmemo" rows="5" cols="60"><c:out value="${boardInfo.brdmemo}"/></textarea>
+		
+		</div> 
+
+		<div class="form-group"> 
+		<label for="exampleInputFile">File input</label> 
+		<input type="file" id="exampleInputFile" name="uploadfile" multiple="" />
+		</div> 
+		
+		<input type="hidden" name="brdno" value="<c:out value="${boardInfo.brdno}"/>"> 	
+		<div id="write">
+			<button type="button" class="btn btn-default" onclick="location.href='boardList'">back</button>
+			<button type="submit" class="btn btn-default" onclick="fn_formSubmit(); return false;">Submit</button>
+		</div>
 	</form>	
+	</div>
 </body>
 </html>
