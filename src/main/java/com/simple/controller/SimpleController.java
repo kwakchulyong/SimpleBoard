@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,16 +41,23 @@ public class SimpleController {
      * 리스트.
      */
     @RequestMapping(value = "/boardList")
-    public String boardList(SearchVO searchVO, ModelMap modelMap) {
+    public String boardList(SearchVO searchVO, ModelMap modelMap, HttpSession session) {
     	
-        searchVO.pageCalculate( simpleService.selectBoardCount(searchVO) ); // startRow, endRow
 
-        List<?> listview  = simpleService.selectBoardList(searchVO);
-        
-        modelMap.addAttribute("listview", listview);
-        modelMap.addAttribute("searchVO", searchVO);
-        
-        return "/board/BoardList";
+    	if(session.getAttribute("userLoginInfo") == null) {
+    		
+    		return "login";
+    		
+    	} else {
+	        searchVO.pageCalculate( simpleService.selectBoardCount(searchVO) ); // startRow, endRow
+	
+	        List<?> listview  = simpleService.selectBoardList(searchVO);
+	        
+	        modelMap.addAttribute("listview", listview);
+	        modelMap.addAttribute("searchVO", searchVO);
+	        
+	        return "/board/BoardList";
+    	}
     }
     
     /** 
