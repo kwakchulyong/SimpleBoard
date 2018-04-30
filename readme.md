@@ -62,6 +62,17 @@ modify
 	  PRIMARY KEY (BGNO)
 	);
 	
+	//addition table
+	create table user (
+    userid varchar(100),
+    password varchar(100),
+    username varchar(100),
+    email varchar(100)
+	);
+
+	insert into user values ('test','1234','테스트','test@test.com');
+	
+	
 </p>
 
 
