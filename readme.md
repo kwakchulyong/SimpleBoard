@@ -1,4 +1,6 @@
 <h1>Development environment</h1>
+<p>
+
 Programming Language - Java 1.7</br>
 IDE - Eclipse<br/>
 DB - Mysql <br/>
@@ -8,7 +10,11 @@ Traditional Korean style Spring Framework board
 
 modify
 \src\main\webapp\WEB-INF\applicationContext.xml
+
+</p>
+
 <h1>mysql query</h1>
+ <p>
  
     CREATE TABLE TBL_BOARD (
       BGNO INT(11),								
@@ -55,6 +61,7 @@ modify
 	  BGDATE DATETIME,							
 	  PRIMARY KEY (BGNO)
 	);
-
+	
+</p>
 
 
