@@ -5,11 +5,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>board</title>
+<title>Simple Board</title>
 
-<link rel="stylesheet" href="/webjars/bootstrap/4.1.0/dist/css/bootstrap.min.css">
-<script src="/webjars/jquery/3.3.1/dist/jquery.min.js"></script>
-<script src="/webjars/bootstrap/4.1.0/dist/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
 <style>
 #write {
       text-align: right;
@@ -66,7 +67,7 @@ function fn_formSubmit(){
 		
 		<input type="hidden" name="brdno" value="<c:out value="${boardInfo.brdno}"/>"> 	
 		<div id="write">
-			<button type="button" class="btn btn-default" onclick="location.href='boardList'">back</button>
+			<button type="button" class="btn btn-default" onclick="location.href='boardList'">List</button>
 			<button type="submit" class="btn btn-default" onclick="fn_formSubmit(); return false;">Submit</button>
 		</div>
 	</form>	

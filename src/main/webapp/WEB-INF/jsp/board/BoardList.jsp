@@ -6,11 +6,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>board</title>
-
-<link rel="stylesheet" href="/webjars/bootstrap/4.1.0/dist/css/bootstrap.min.css">
-<script src="/webjars/jquery/3.3.1/dist/jquery.min.js"></script>
-<script src="/webjars/bootstrap/4.1.0/dist/js/bootstrap.min.js"></script>
+<title>Simple Board</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 
 <style>
 #write {
@@ -30,9 +29,45 @@ function fn_formSubmit(){
 	<div class="container">
 	
 	<h1>Simple Board</h1>
-	
+	<div id="write">
+		<button type="button" class="btn btn-default" onclick="location.href='boardForm'">write</button>
+	</div>
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th width="6%" style="text-align: center;">No</th> 
+				<th width="50%">Name</th>
+				<th width="14%" style="text-align: center;">Register</th>
+				<th width="10%" style="text-align: center;">Reg-Date</th>
+				<th width="10%" style="text-align: center;">Counter</th>
+				<th width="10%" style="text-align: center;">Attach</th>
+			</tr>
+		</thead>
+		<tbody>
+			<c:forEach var="listview" items="${listview}" varStatus="status">	
+				<c:url var="link" value="boardRead">
+					<c:param name="brdno" value="${listview.brdno}" />
+				</c:url>		
+										  				
+				<tr>
+					<td style="text-align: center;"><c:out value="${searchVO.totRow-((searchVO.page-1)*searchVO.displayRowCount + status.index)}"/></td>
+					<td>
+						<a href="${link}"><c:out value="${listview.brdtitle}"/></a>
+						<c:if test="${listview.replycnt>0}">
+							(<c:out value="${listview.replycnt}"/>)
+						</c:if>						
+					</td>
+					<td><c:out value="${listview.brdwriter}"/></td>
+					<td style="text-align: center;"><c:out value="${listview.brddate}"/></td>
+					<td style="text-align: center;"><c:out value="${listview.brdhit}"/></td>
+					<td style="text-align: center;"><c:out value="${listview.filecnt}"/></td>
+				</tr>
+			</c:forEach>
+		</tbody>
+	</table>
+	<hr/>
 	<form id="form1" name="form1"  method="post">
-	    <jsp:include page="/WEB-INF/jsp/common/pagingforSubmit.jsp" />
+	<jsp:include page="/WEB-INF/jsp/common/pagingforSubmit.jsp" />
 	
 	<div class="row" >
 	  <div class="col-lg-6">
@@ -57,53 +92,9 @@ function fn_formSubmit(){
 	    </div>
 	  </div>
 	</div>
-	</form>	
-	<table class="table table-striped table-bordered table-hover">
-		<colgroup>
-			<col width='10%' />
-			<col width='*%' />
-			<col width='15%' />
-			<col width='20%' />
-			<col width='18%' />
-			<col width='10%' />
-		</colgroup>
-		<thead>
-			<tr>
-				<th>No</th> 
-				<th>Name</th>
-				<th>Register</th>
-				<th>Reg-Date</th>
-				<th>Counter</th>
-				<th>Attach</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach var="listview" items="${listview}" varStatus="status">	
-				<c:url var="link" value="boardRead">
-					<c:param name="brdno" value="${listview.brdno}" />
-				</c:url>		
-										  				
-				<tr>
-					<td><c:out value="${searchVO.totRow-((searchVO.page-1)*searchVO.displayRowCount + status.index)}"/></td>
-					<td>
-						<a href="${link}"><c:out value="${listview.brdtitle}"/></a>
-						<c:if test="${listview.replycnt>0}">
-							(<c:out value="${listview.replycnt}"/>)
-						</c:if>						
-					</td>
-					<td><c:out value="${listview.brdwriter}"/></td>
-					<td><c:out value="${listview.brddate}"/></td>
-					<td><c:out value="${listview.brdhit}"/></td>
-					<td><c:out value="${listview.filecnt}"/></td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-	<hr/>
-	<div id="write">
-		<button type="button" class="btn btn-default" onclick="location.href='boardForm'">write</button>
-	</div>
 	
+	</form>	
+	 
 	</div>
 </body>
 </html>
