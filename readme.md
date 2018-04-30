@@ -12,11 +12,7 @@ modify
 \src\main\webapp\WEB-INF\applicationContext.xml
 </p>
 <h1>2018.04.30 relesed</h1>
-<p>
 ![title](/screenshot/20180430/boardlist.png)
-
-
-</p>
 	
 	
 
