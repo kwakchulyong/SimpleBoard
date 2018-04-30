@@ -12,20 +12,22 @@ modify
 \src\main\webapp\WEB-INF\applicationContext.xml
 </p>
 <h1>2018.04.30 relesed</h1>
+Board List Page<br/>
 <center>
 <img src="https://github.com/kwakchulyong/SimpleBoard/blob/master/screenshot/20180430/boardlist.png" width="100%" height="100%">
 </center>
+Board View Page<br/>
 <center>
 <img src="https://github.com/kwakchulyong/SimpleBoard/blob/master/screenshot/20180430/boardview.png" width="100%" height="100%">
 </center>
+Board Write Page<br/>
 <center>
 <img src="https://github.com/kwakchulyong/SimpleBoard/blob/master/screenshot/20180430/boardwriteform.png" width="100%" height="100%">
 </center>
+Login Page<br/>
 <center>
-<img src="https://github.com/kwakchulyong/SimpleBoard/blob/master/screenshot/20180430/login.png" width="100%" height="100%">
+<img src="https://github.com/kwakchulyong/SimpleBoard/blob/master/screenshot/20180430/login%20page.png" width="100%" height="100%">
 </center>
-
-
 
 <h1>mysql query</h1>
  <p>
