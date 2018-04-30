@@ -12,7 +12,10 @@ modify
 \src\main\webapp\WEB-INF\applicationContext.xml
 </p>
 <h1>2018.04.30 relesed</h1>
-![title](/screenshot/20180430/boardlist.png)
+<center>
+<img src="https://github.com/kwakchulyong/SimpleBoard/blob/master/screenshot/20180430/boardlist.png" width="300" height="300">
+</center>
+
 	
 	
 
