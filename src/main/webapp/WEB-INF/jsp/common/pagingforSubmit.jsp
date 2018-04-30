@@ -2,10 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:if test="${searchVO.totPage>1}">
-	<div class="paging">
+
+
+	<div class="paging" align="center">
 		<c:if test="${searchVO.page>1}">
-			<a href="javascript:fnSubmitForm(1);">[처음]</a>
-			<a href="javascript:fnSubmitForm(${searchVO.page-1});">[이전]</a>
+			<a href="javascript:fnSubmitForm(1);">&laquo;</a>
+			<a href="javascript:fnSubmitForm(${searchVO.page-1});">&lt;</a>
 		</c:if>
 				
 		<c:forEach var="i" begin="${searchVO.pageStart}" end="${searchVO.pageEnd}" step="1" varStatus="status">
@@ -21,8 +23,8 @@
         </c:forEach>
         
 		<c:if test="${searchVO.totPage > searchVO.page}">
-			<a href="javascript:fnSubmitForm(${searchVO.page+1});">[다음]</a>
-			<a href="javascript:fnSubmitForm(${searchVO.totPage});">[마지막]</a>
+			<a href="javascript:fnSubmitForm(${searchVO.page+1});">&gt;</a>
+			<a href="javascript:fnSubmitForm(${searchVO.totPage});">&raquo;</a>
 		</c:if>
 	</div>
 	<br/>
@@ -35,4 +37,7 @@
 		document.form1.submit();
 	}
 	</script>
+	
+
+	
 </c:if>
