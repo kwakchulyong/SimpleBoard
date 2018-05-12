@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.codehaus.jackson.map.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,48 +27,48 @@ import com.simple.vo.SimpleVO;
 @Controller
 public class SimpleController {
 	
+	private static final Logger logger = LoggerFactory.getLogger(SimpleController.class);
+	
 	 @Autowired
 	 private SimpleService simpleService;
-	 
-	 
-	 @RequestMapping(value="/test")
-    public ModelAndView openBoardList() throws Exception{
-		 
-    	ModelAndView mv = new ModelAndView("/board/test");
-    	
-    	return mv;
-    }
 
 	 /**
-     * 리스트.
+     * Board List
      */
     @RequestMapping(value = "/boardList")
     public String boardList(SearchVO searchVO, ModelMap modelMap, HttpSession session) {
     	
+    	logger.debug("================== SimpleController.boardList :: start ====================");
 
     	if(session.getAttribute("userLoginInfo") == null) {
     		
+    		logger.debug("Non sign in");
     		return "login";
     		
-    	} else {
-	        searchVO.pageCalculate( simpleService.selectBoardCount(searchVO) ); // startRow, endRow
-	
-	        List<?> listview  = simpleService.selectBoardList(searchVO);
-	        
-	        modelMap.addAttribute("listview", listview);
-	        modelMap.addAttribute("searchVO", searchVO);
-	        
-	        return "/board/BoardList";
-    	}
+    	} 
+    	
+        searchVO.pageCalculate( simpleService.selectBoardCount(searchVO) ); // startRow, endRow
+
+        List<?> listview  = simpleService.selectBoardList(searchVO);
+        
+        modelMap.addAttribute("listview", listview);
+        modelMap.addAttribute("searchVO", searchVO);
+        
+        logger.debug("================== SimpleController.boardList :: end ====================");
+        
+        return "/board/BoardList";
+    	
     }
     
     /** 
-     * 글 쓰기. 
+     * WriteForm 
      */
     @RequestMapping(value = "/boardForm")
     public String boardForm(HttpServletRequest request, ModelMap modelMap) {
-        String brdno = request.getParameter("brdno");
-        if (brdno != null) {
+    	logger.debug("================== SimpleController.boardForm :: start ====================");
+    	
+    	String brdno = request.getParameter("brdno");
+        if (brdno != null) { //modify
             SimpleVO boardInfo = simpleService.selectBoardOne(brdno);
             List<?> listview = simpleService.selectBoard6FileList(brdno);
         
@@ -74,14 +76,18 @@ public class SimpleController {
             modelMap.addAttribute("listview", listview);
         }
         
+        logger.debug("================== SimpleController.boardForm :: end ====================");
+        
         return "/board/BoardForm";
     }
     
     /**
-     * 글 저장.
+     * Board Save
      */
     @RequestMapping(value = "/boardSave")
     public String boardSave(HttpServletRequest request, SimpleVO boardInfo) {
+    	logger.debug("================== SimpleController.boardSave :: start ====================");
+    	
         String[] fileno = request.getParameterValues("fileno");
         
         FileUtil fs = new FileUtil();
@@ -89,15 +95,17 @@ public class SimpleController {
 
         simpleService.insertBoard(boardInfo, filelist, fileno);
 
+        logger.debug("================== SimpleController.boardSave :: end ====================");
+        
         return "redirect:/boardList";
     }
 
     /**
-     * 글 읽기.
+     * Board Read
      */
     @RequestMapping(value = "/boardRead")
-    public String board7Read(HttpServletRequest request, ModelMap modelMap) {
-        
+    public String boardRead(HttpServletRequest request, ModelMap modelMap) {
+    	logger.debug("================== SimpleController.boardRead :: start ====================");
         String brdno = request.getParameter("brdno");
         
         simpleService.updateBoard6Read(brdno);
@@ -108,16 +116,16 @@ public class SimpleController {
         modelMap.addAttribute("boardInfo", boardInfo);
         modelMap.addAttribute("listview", listview);
         modelMap.addAttribute("replylist", replylist);
+        logger.debug("================== SimpleController.boardRead :: end ====================");
         
         return "/board/BoardRead";
     }
     
     /**
-     * 글 삭제.
+     * Board delete.
      */
     @RequestMapping(value = "/boardDelete")
     public String boardDelete(HttpServletRequest request) {
-        
         String brdno = request.getParameter("brdno");
         
         simpleService.deleteBoardOne(brdno);
@@ -125,51 +133,52 @@ public class SimpleController {
         return "redirect:/boardList";
     }
 
-    /* ===================================================================== */
-    
     /**
-     * 댓글 저장.
+     * Replay save
      */
     @RequestMapping(value = "/boardReplySave")
-    public String board7ReplySave(HttpServletRequest request, SimpleReplyVO boardReplyInfo) {
-        
+    public String boardReplySave(HttpServletRequest request, SimpleReplyVO boardReplyInfo) {
     	simpleService.insertBoardReply(boardReplyInfo);
 
         return "redirect:/boardRead?brdno=" + boardReplyInfo.getBrdno();
     }
     
     /**
-     * 댓글 저장 with Ajax.
+     * reply save with Ajax.
      */
     @RequestMapping(value = "/boardReplySaveAjax")
-    public void board7ReplySaveAjax(HttpServletResponse response, SimpleReplyVO boardReplyInfo) {
+    public void boardReplySaveAjax(HttpServletResponse response, SimpleReplyVO boardReplyInfo) {
+    	logger.debug("================== SimpleController.boardReplySaveAjax :: start ====================");
+    	
         ObjectMapper mapper = new ObjectMapper();
         response.setContentType("application/json;charset=UTF-8");
         
         simpleService.insertBoardReply(boardReplyInfo);
         
+        logger.debug("================== SimpleController.boardReplySaveAjax :: end ====================");
+        
         try {
             response.getWriter().print( mapper.writeValueAsString(boardReplyInfo.getReno()));
         } catch (IOException ex) {
-            System.out.println("오류: 댓글 저장에 문제가 발생했습니다.");
+            logger.error("error : About Reply save with Ajax");
         }
     }
 
     /**
-     * 댓글 저장  with Ajax2.
+     * replaysave  with Ajax2.
      */
     @RequestMapping(value = "/boardReplySaveAjax4Reply")
-    public String board7ReplySaveAjax4Reply(SimpleReplyVO boardReplyInfo, ModelMap modelMap) {
-        
+    public String boardReplySaveAjax4Reply(SimpleReplyVO boardReplyInfo, ModelMap modelMap) {
     	simpleService.insertBoardReply(boardReplyInfo);
 
         modelMap.addAttribute("replyInfo", boardReplyInfo);
+        
         
         return "/board/BoardReadAjax4Reply";
     }
     
     /**
-     * 댓글 삭제.
+     * Reply delete.
      */
     @RequestMapping(value = "/boardReplyDelete")
     public String board7ReplyDelete(SimpleReplyVO boardReplyInfo) {
@@ -181,10 +190,10 @@ public class SimpleController {
     }
     
     /**
-     * 댓글 삭제 with Ajax.
+     * Reply delete with Ajax.
      */
     @RequestMapping(value = "/boardReplyDeleteAjax")
-    public void board7ReplyDeleteAjax(HttpServletResponse response, SimpleReplyVO boardReplyInfo) {
+    public void boardReplyDeleteAjax(HttpServletResponse response, SimpleReplyVO boardReplyInfo) {
         ObjectMapper mapper = new ObjectMapper();
         response.setContentType("application/json;charset=UTF-8");
         
@@ -195,7 +204,7 @@ public class SimpleController {
                 response.getWriter().print(mapper.writeValueAsString("OK"));
             }
         } catch (IOException ex) {
-            System.out.println("오류: 댓글 삭제에 문제가 발생했습니다.");
+            logger.error("error : About Reply delete with Ajax");
         }
     }
 

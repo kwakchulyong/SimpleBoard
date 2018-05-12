@@ -30,6 +30,13 @@ function fn_formSubmit(){
 	
 	<h1>Simple Board</h1>
 	<div id="write">
+	<c:choose>
+	<c:when test="${not empty sessionScope.userLoginInfo}">
+		${sessionScope.userLoginInfo.userName} is logged in <a href="logout">logout</a>
+	</c:when>
+	<c:otherwise>
+	</c:otherwise>
+</c:choose>
 		<button type="button" class="btn btn-default" onclick="location.href='boardForm'">write</button>
 	</div>
 	<table class="table table-striped table-bordered table-hover">

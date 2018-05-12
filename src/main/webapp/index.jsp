@@ -21,6 +21,11 @@
 			<div class="form-group">
 				<a href="boardList">Let's go to the board</a>
 			</div>
+			<div class="form-group">
+				<button type="button" class="btn btn-default" onclick="location.href='login'">login</button>
+				<button type="button" class="btn btn-default" onclick="location.href='signup'">sign up</button>
+			</div>
+			
 		</div>	
 	</div>
 </div>

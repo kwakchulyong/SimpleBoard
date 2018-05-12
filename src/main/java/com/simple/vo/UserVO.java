@@ -3,9 +3,12 @@ package com.simple.vo;
 public class UserVO {
 	private String userId;
 	private String password;
+	private String encodepassword;
 	private String userName;
 	private String email;
 	private String loginDate;
+	
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -18,6 +21,15 @@ public class UserVO {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+	public String getEncodepassword() {
+		return encodepassword;
+	}
+	public void setEncodepassword(String encodepassword) {
+		this.encodepassword = encodepassword;
+	}
+	
+	
 	public String getUserName() {
 		return userName;
 	}
